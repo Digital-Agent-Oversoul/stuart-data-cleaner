@@ -11,3 +11,6 @@ This file is created to test if branch protection is working correctly.
 - Require pull request before merging
 - Require approvals
 - Dismiss stale approvals
+
+## Test Update
+Adding this line to test if branch protection blocks direct pushes.
