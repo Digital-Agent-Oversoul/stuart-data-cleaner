@@ -1,0 +1,25 @@
+{
+  "openai": {
+    "api_key": "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",
+    "model": "gpt-4o-mini",
+    "max_tokens": 150,
+    "temperature": 0.1,
+    "monthly_budget": 10.00,
+    "alert_threshold": 0.8
+  },
+  "ollama": {
+    "base_url": "http://localhost:11434",
+    "model": "qwen2.5:7b-instruct-q4_K_M",
+    "max_tokens": 150,
+    "temperature": 0.1
+  },
+  "processing": {
+    "batch_size": 10,
+    "confidence_threshold": 0.3,
+    "enable_uncertainty_detection": true
+  },
+  "output": {
+    "output_directory": "test_output",
+    "create_summary_report": true
+  }
+}
