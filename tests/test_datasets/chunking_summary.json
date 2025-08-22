@@ -1,0 +1,343 @@
+{
+  "created_at": "2025-08-21T17:24:19.075917",
+  "source_files": {
+    "large_dataset": "C:\\LocalAI\\!projects\\Stuart\\Broadly Report\\Broadly RAW\\Broadly - 01.01.25-8.04.25 - RawData.xlsx",
+    "small_dataset": "C:\\LocalAI\\!projects\\Stuart\\Broadly Report\\Broadly RAW\\Broadly - 7.29.25-8.04.25 - RawData.xlsx"
+  },
+  "chunking_config": {
+    "header_row": 3,
+    "target_chunk_size": 92,
+    "total_chunks": 47
+  },
+  "chunks_created": [
+    {
+      "chunk_number": 1,
+      "filename": "test_chunk_01_20250821_172404.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_01_20250821_172404.xlsx",
+      "row_range": "1-92"
+    },
+    {
+      "chunk_number": 2,
+      "filename": "test_chunk_02_20250821_172404.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_02_20250821_172404.xlsx",
+      "row_range": "93-184"
+    },
+    {
+      "chunk_number": 3,
+      "filename": "test_chunk_03_20250821_172404.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_03_20250821_172404.xlsx",
+      "row_range": "185-276"
+    },
+    {
+      "chunk_number": 4,
+      "filename": "test_chunk_04_20250821_172404.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_04_20250821_172404.xlsx",
+      "row_range": "277-368"
+    },
+    {
+      "chunk_number": 5,
+      "filename": "test_chunk_05_20250821_172404.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_05_20250821_172404.xlsx",
+      "row_range": "369-460"
+    },
+    {
+      "chunk_number": 6,
+      "filename": "test_chunk_06_20250821_172404.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_06_20250821_172404.xlsx",
+      "row_range": "461-552"
+    },
+    {
+      "chunk_number": 7,
+      "filename": "test_chunk_07_20250821_172405.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_07_20250821_172405.xlsx",
+      "row_range": "553-644"
+    },
+    {
+      "chunk_number": 8,
+      "filename": "test_chunk_08_20250821_172405.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_08_20250821_172405.xlsx",
+      "row_range": "645-736"
+    },
+    {
+      "chunk_number": 9,
+      "filename": "test_chunk_09_20250821_172405.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_09_20250821_172405.xlsx",
+      "row_range": "737-828"
+    },
+    {
+      "chunk_number": 10,
+      "filename": "test_chunk_10_20250821_172405.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_10_20250821_172405.xlsx",
+      "row_range": "829-920"
+    },
+    {
+      "chunk_number": 11,
+      "filename": "test_chunk_11_20250821_172405.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_11_20250821_172405.xlsx",
+      "row_range": "921-1012"
+    },
+    {
+      "chunk_number": 12,
+      "filename": "test_chunk_12_20250821_172406.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_12_20250821_172406.xlsx",
+      "row_range": "1013-1104"
+    },
+    {
+      "chunk_number": 13,
+      "filename": "test_chunk_13_20250821_172406.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_13_20250821_172406.xlsx",
+      "row_range": "1105-1196"
+    },
+    {
+      "chunk_number": 14,
+      "filename": "test_chunk_14_20250821_172406.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_14_20250821_172406.xlsx",
+      "row_range": "1197-1288"
+    },
+    {
+      "chunk_number": 15,
+      "filename": "test_chunk_15_20250821_172406.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_15_20250821_172406.xlsx",
+      "row_range": "1289-1380"
+    },
+    {
+      "chunk_number": 16,
+      "filename": "test_chunk_16_20250821_172407.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_16_20250821_172407.xlsx",
+      "row_range": "1381-1472"
+    },
+    {
+      "chunk_number": 17,
+      "filename": "test_chunk_17_20250821_172407.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_17_20250821_172407.xlsx",
+      "row_range": "1473-1564"
+    },
+    {
+      "chunk_number": 18,
+      "filename": "test_chunk_18_20250821_172407.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_18_20250821_172407.xlsx",
+      "row_range": "1565-1656"
+    },
+    {
+      "chunk_number": 19,
+      "filename": "test_chunk_19_20250821_172408.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_19_20250821_172408.xlsx",
+      "row_range": "1657-1748"
+    },
+    {
+      "chunk_number": 20,
+      "filename": "test_chunk_20_20250821_172408.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_20_20250821_172408.xlsx",
+      "row_range": "1749-1840"
+    },
+    {
+      "chunk_number": 21,
+      "filename": "test_chunk_21_20250821_172408.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_21_20250821_172408.xlsx",
+      "row_range": "1841-1932"
+    },
+    {
+      "chunk_number": 22,
+      "filename": "test_chunk_22_20250821_172408.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_22_20250821_172408.xlsx",
+      "row_range": "1933-2024"
+    },
+    {
+      "chunk_number": 23,
+      "filename": "test_chunk_23_20250821_172409.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_23_20250821_172409.xlsx",
+      "row_range": "2025-2116"
+    },
+    {
+      "chunk_number": 24,
+      "filename": "test_chunk_24_20250821_172409.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_24_20250821_172409.xlsx",
+      "row_range": "2117-2208"
+    },
+    {
+      "chunk_number": 25,
+      "filename": "test_chunk_25_20250821_172409.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_25_20250821_172409.xlsx",
+      "row_range": "2209-2300"
+    },
+    {
+      "chunk_number": 26,
+      "filename": "test_chunk_26_20250821_172410.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_26_20250821_172410.xlsx",
+      "row_range": "2301-2392"
+    },
+    {
+      "chunk_number": 27,
+      "filename": "test_chunk_27_20250821_172410.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_27_20250821_172410.xlsx",
+      "row_range": "2393-2484"
+    },
+    {
+      "chunk_number": 28,
+      "filename": "test_chunk_28_20250821_172410.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_28_20250821_172410.xlsx",
+      "row_range": "2485-2576"
+    },
+    {
+      "chunk_number": 29,
+      "filename": "test_chunk_29_20250821_172411.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_29_20250821_172411.xlsx",
+      "row_range": "2577-2668"
+    },
+    {
+      "chunk_number": 30,
+      "filename": "test_chunk_30_20250821_172411.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_30_20250821_172411.xlsx",
+      "row_range": "2669-2760"
+    },
+    {
+      "chunk_number": 31,
+      "filename": "test_chunk_31_20250821_172411.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_31_20250821_172411.xlsx",
+      "row_range": "2761-2852"
+    },
+    {
+      "chunk_number": 32,
+      "filename": "test_chunk_32_20250821_172412.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_32_20250821_172412.xlsx",
+      "row_range": "2853-2944"
+    },
+    {
+      "chunk_number": 33,
+      "filename": "test_chunk_33_20250821_172412.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_33_20250821_172412.xlsx",
+      "row_range": "2945-3036"
+    },
+    {
+      "chunk_number": 34,
+      "filename": "test_chunk_34_20250821_172413.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_34_20250821_172413.xlsx",
+      "row_range": "3037-3128"
+    },
+    {
+      "chunk_number": 35,
+      "filename": "test_chunk_35_20250821_172413.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_35_20250821_172413.xlsx",
+      "row_range": "3129-3220"
+    },
+    {
+      "chunk_number": 36,
+      "filename": "test_chunk_36_20250821_172413.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_36_20250821_172413.xlsx",
+      "row_range": "3221-3312"
+    },
+    {
+      "chunk_number": 37,
+      "filename": "test_chunk_37_20250821_172414.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_37_20250821_172414.xlsx",
+      "row_range": "3313-3404"
+    },
+    {
+      "chunk_number": 38,
+      "filename": "test_chunk_38_20250821_172414.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_38_20250821_172414.xlsx",
+      "row_range": "3405-3496"
+    },
+    {
+      "chunk_number": 39,
+      "filename": "test_chunk_39_20250821_172415.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_39_20250821_172415.xlsx",
+      "row_range": "3497-3588"
+    },
+    {
+      "chunk_number": 40,
+      "filename": "test_chunk_40_20250821_172415.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_40_20250821_172415.xlsx",
+      "row_range": "3589-3680"
+    },
+    {
+      "chunk_number": 41,
+      "filename": "test_chunk_41_20250821_172416.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_41_20250821_172416.xlsx",
+      "row_range": "3681-3772"
+    },
+    {
+      "chunk_number": 42,
+      "filename": "test_chunk_42_20250821_172416.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_42_20250821_172416.xlsx",
+      "row_range": "3773-3864"
+    },
+    {
+      "chunk_number": 43,
+      "filename": "test_chunk_43_20250821_172417.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_43_20250821_172417.xlsx",
+      "row_range": "3865-3956"
+    },
+    {
+      "chunk_number": 44,
+      "filename": "test_chunk_44_20250821_172417.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_44_20250821_172417.xlsx",
+      "row_range": "3957-4048"
+    },
+    {
+      "chunk_number": 45,
+      "filename": "test_chunk_45_20250821_172418.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_45_20250821_172418.xlsx",
+      "row_range": "4049-4140"
+    },
+    {
+      "chunk_number": 46,
+      "filename": "test_chunk_46_20250821_172418.xlsx",
+      "rows": 92,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_46_20250821_172418.xlsx",
+      "row_range": "4141-4232"
+    },
+    {
+      "chunk_number": 47,
+      "filename": "test_chunk_47_20250821_172419.xlsx",
+      "rows": 29,
+      "file_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\tests\\test_datasets\\test_chunk_47_20250821_172419.xlsx",
+      "row_range": "4233-4261"
+    }
+  ]
+}

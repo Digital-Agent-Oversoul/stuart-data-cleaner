@@ -72,7 +72,6 @@
 C:\LocalAI\!projects\Stuart\data_cleaner\
 ├── .project_root              # 🎯 Project boundary marker
 ├── dev_setup.ps1             # 🔧 Development environment setup
-├── DEVELOPMENT_GUIDELINES.md  # 📖 This file
 ├── core\                      # 🧠 Core engine modules
 ├── config\                    # ⚙️ Configuration management
 ├── workflows\                 # 🔄 Workflow implementations
@@ -80,9 +79,63 @@ C:\LocalAI\!projects\Stuart\data_cleaner\
 │   └── contact_export\       # 📧 Export workflow
 ├── tests\                     # 🧪 Test scripts
 ├── project_docs\              # 📚 Project documentation
+│   ├── README.md              # 📖 Comprehensive project overview
+│   ├── DEVELOPMENT_GUIDELINES.md  # 🔧 This file - development standards
+│   ├── GIT_WORKFLOW.md       # 🌿 Git workflow and branching strategy
+│   ├── TASK_STATUS.md        # 📋 Current task status and progress
+│   ├── CHANGELOG.md          # 📝 Version history and changes
+│   ├── TECHNICAL_ARCHITECTURE.md  # 🏗️ System design and architecture
+│   ├── DEVELOPMENT_ROADMAP.md     # 🚀 Implementation plan and milestones
+│   ├── TESTING_STRATEGY.md   # 🧪 Testing approach and quality gates
+│   ├── CONTRIBUTING.md       # 🤝 Contribution guidelines
+│   └── PRD.md                # 📋 Product requirements document
 ├── cli\                       # 💻 Command line interface
 └── processors\                # 🔧 Process modules
 ```
+
+## 📚 **Documentation Organization**
+
+### **Root Directory (Production-Ready)**
+- **`main.py`** - Main entry point for the application
+- **`test_config.json`** - Production configuration file
+- **`requirements.txt`** - Python dependencies
+- **`pyproject.toml`** - Project configuration
+- **`fix_imports.py`** - Import diagnostic tool
+- **`commit_changes.py`** - Automated git commit script
+
+### **project_docs/ Directory (Comprehensive Documentation)**
+- **`README.md`** - Complete project overview and organization
+- **`DEVELOPMENT_GUIDELINES.md`** - This file - development standards
+- **`GIT_WORKFLOW.md`** - Git workflow and branching strategy
+- **`TASK_STATUS.md`** - Current task status and progress tracking
+- **`CHANGELOG.md`** - Version history and change tracking
+- **`TECHNICAL_ARCHITECTURE.md`** - System design and architecture
+- **`DEVELOPMENT_ROADMAP.md`** - Implementation plan and milestones
+- **`TESTING_STRATEGY.md`** - Testing approach and quality gates
+- **`CONTRIBUTING.md`** - Contribution guidelines
+- **`PRD.md`** - Product requirements document
+
+### **Development and Testing**
+- **`dev/`** - Development utilities and task tracking
+- **`tests/`** - Test scripts and validation tools
+- **`test_output/`** - Test results and output files
+
+## 🎯 **Reorganization Benefits**
+
+### **Clear Separation of Concerns**
+- **Root Directory**: Contains only production-ready files and essential configuration
+- **project_docs/**: All project documentation in one logical location
+- **Development Files**: Separated into appropriate directories (dev/, tests/)
+
+### **Improved Documentation Access**
+- **Single Source of Truth**: Each type of information has one authoritative location
+- **Logical Organization**: Documentation grouped by purpose and function
+- **Easy Navigation**: Clear hierarchy and cross-references between documents
+
+### **Professional Project Structure**
+- **Industry Standard**: Follows best practices for project organization
+- **Easy Maintenance**: Clear structure makes updates and additions straightforward
+- **Team Collaboration**: Consistent organization helps team members find information
 
 ## 🎯 **Success Metrics**
 
@@ -90,3 +143,6 @@ C:\LocalAI\!projects\Stuart\data_cleaner\
 - ✅ **All development** contained within project boundaries
 - ✅ **Clear separation** between project and reference files
 - ✅ **Consistent** working directory across sessions
+- ✅ **Professional documentation organization** with project_docs/ structure
+- ✅ **Single source of truth** for each type of information
+- ✅ **Easy navigation** between related documentation

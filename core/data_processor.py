@@ -308,7 +308,7 @@ class DataProcessor:
         final_count = len(data)
         removed_count = initial_count - final_count
         
-        logger.info(f"Removed {removed_count} invalid records: {initial_count} → {final_count}")
+        logger.info(f"Removed {removed_count} invalid records: {initial_count} -> {final_count}")
         
         return data
     

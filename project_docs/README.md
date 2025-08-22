@@ -103,6 +103,110 @@ python main.py contact "path/to/raw_data.xlsx"
 python main.py interactive "path/to/raw_data.xlsx"
 ```
 
+## 📁 **Project Organization**
+
+### **Production Root (Keep Clean)**
+```
+data_cleaner/
+├── core/                           # Core processing engine
+├── workflows/                      # Workflow processors  
+├── config/                         # Configuration management
+├── cli/                           # Command-line interface
+├── processors/                     # Data processors
+├── main.py                        # 🎯 MAIN ENTRY POINT
+├── workflows/contact_export/export_processor.py  # 🎯 PRODUCTION Contact Export processor
+├── test_config.json               # 🎯 PRODUCTION Configuration
+├── README.md                      # 🎯 PROJECT DOCUMENTATION
+├── DEVELOPMENT_GUIDELINES.md      # Development standards
+└── .project_root                  # Project root marker
+```
+
+### **Test Folder (🧪 Testing & Validation)**
+```
+test/
+├── test_output/                   # Test output files
+├── test_*.py                      # Test scripts
+├── check_*.py                     # Output validation scripts
+├── analyze_*.py                   # Data analysis scripts
+└── run_tests.py                   # 🎯 TEST RUNNER
+```
+
+### **Development Folder (🛠️ Development & Documentation)**
+```
+dev/
+├── archon_project.json            # Task tracking
+├── SESSION_SUMMARY_20250821.md   # Session documentation
+├── archon_tasks.py                # Local task management
+├── dev_setup.ps1                  # Development environment setup
+└── setup_archon_project.py        # Project setup utilities
+```
+
+### **Documentation Folder (📚 Project Documentation)**
+```
+project_docs/
+├── README.md                      # This file - comprehensive project overview
+├── DEVELOPMENT_GUIDELINES.md      # Development standards and file location rules
+├── GIT_WORKFLOW.md               # Git workflow and branching strategy
+├── TASK_STATUS.md                # Current task status and progress
+├── CHANGELOG.md                  # Version history and changes
+├── TECHNICAL_ARCHITECTURE.md     # System design and architecture
+├── DEVELOPMENT_ROADMAP.md        # Implementation plan and milestones
+├── TESTING_STRATEGY.md           # Testing approach and quality gates
+├── CONTRIBUTING.md               # Contribution guidelines
+└── PRD.md                        # Product requirements document
+```
+
+## 🎯 **Benefits of Organization**
+
+### **Production Readiness**
+- **Clean Root**: Only production files in main directory
+- **Easy Deployment**: Clear separation of concerns
+- **Professional Structure**: Industry-standard organization
+
+### **Development Efficiency**
+- **Test Runner**: Easy access to all tests via `test/run_tests.py`
+- **Organized Scripts**: Logical grouping by purpose
+- **Clear Documentation**: Development files separated from production
+
+### **Maintenance**
+- **Easy Testing**: All test scripts in one location
+- **Clear Dependencies**: Production vs. development separation
+- **Scalable Structure**: Easy to add new tests and utilities
+
+### **Documentation Benefits**
+- **Single Source of Truth**: Each type of information has one authoritative location
+- **Easy Navigation**: Clear hierarchy and cross-references between documents
+- **Professional Structure**: Industry-standard documentation organization
+- **Better Collaboration**: Team members can easily find and update documentation
+
+## 🚀 **How to Use**
+
+### **Running Tests**
+```bash
+# From project root
+python test/run_tests.py
+
+# Or run individual tests
+python test/test_full_dataset.py
+python test/check_sheet_name_change.py
+```
+
+### **Development Work**
+```bash
+# Access development utilities
+python dev/archon_tasks.py
+python dev/setup_archon_project.py
+```
+
+### **Production Use**
+```bash
+# Main entry point
+python main.py contact <input_file.xlsx>
+
+# Direct processor access
+python workflows/contact_export/export_processor.py
+```
+
 ## 📚 **Documentation**
 
 ### **Project Documentation**

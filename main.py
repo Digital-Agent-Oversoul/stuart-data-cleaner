@@ -11,6 +11,7 @@ import sys
 import os
 from pathlib import Path
 from typing import Dict, Any, Optional
+import pandas as pd
 
 # Add project root to path for imports
 project_root = Path(__file__).parent
@@ -41,11 +42,11 @@ def setup_logging():
 def validate_input_file(file_path: str) -> bool:
     """Validate that input file exists and is readable"""
     if not os.path.exists(file_path):
-        print(f"❌ Error: Input file not found: {file_path}")
+        print(f"ERROR: Input file not found: {file_path}")
         return False
     
     if not file_path.lower().endswith(('.xlsx', '.xls', '.csv')):
-        print(f"❌ Error: Unsupported file format. Please use Excel (.xlsx, .xls) or CSV files.")
+        print(f"ERROR: Unsupported file format. Please use Excel (.xlsx, .xls) or CSV files.")
         return False
     
     return True
@@ -61,7 +62,6 @@ def process_survey_workflow(config: Config, input_file: str, output_dir: str, lo
         processor = SurveyProcessor(config.__dict__)
         
         # Load and process data
-        import pandas as pd
         data = pd.read_excel(input_file) if input_file.endswith(('.xlsx', '.xls')) else pd.read_csv(input_file)
         
         logger.info(f"Loaded {len(data)} records for processing")
@@ -95,7 +95,7 @@ def process_survey_workflow(config: Config, input_file: str, output_dir: str, lo
         
     except Exception as e:
         logger.error(f"Error in Survey workflow: {str(e)}")
-        print(f"❌ Error processing survey data: {str(e)}")
+        print(f"ERROR: Error processing survey data: {str(e)}")
         return False
 
 
@@ -109,7 +109,6 @@ def process_contact_export_workflow(config: Config, input_file: str, output_dir:
         processor = ExportProcessor(config.__dict__)
         
         # Load and process data
-        import pandas as pd
         data = pd.read_excel(input_file) if input_file.endswith(('.xlsx', '.xls')) else pd.read_csv(input_file)
         
         logger.info(f"Loaded {len(data)} records for processing")
@@ -144,7 +143,7 @@ def process_contact_export_workflow(config: Config, input_file: str, output_dir:
         
     except Exception as e:
         logger.error(f"Error in Contact Export workflow: {str(e)}")
-        print(f"❌ Error processing contact export data: {str(e)}")
+        print(f"ERROR: Error processing contact export data: {str(e)}")
         return False
 
 
@@ -223,7 +222,7 @@ Examples:
         if args.verbose:
             config.processing.enable_progress_tracking = True
     except Exception as e:
-        print(f"❌ Error loading configuration: {str(e)}")
+        print(f"ERROR: Error loading configuration: {str(e)}")
         sys.exit(1)
     
     # Setup logging level
@@ -249,7 +248,7 @@ Examples:
         print(f"✅ {args.workflow.title()} workflow completed successfully!")
         print(f"📁 Output files saved to: {os.path.abspath(args.output_dir)}")
     else:
-        print(f"❌ {args.workflow.title()} workflow failed. Check logs for details.")
+        print(f"ERROR: {args.workflow.title()} workflow failed. Check logs for details.")
         sys.exit(1)
 
 

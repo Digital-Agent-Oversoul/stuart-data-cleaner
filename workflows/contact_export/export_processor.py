@@ -6,12 +6,28 @@ Production-ready Contact Export workflow processor that uses unified core logic
 and provides Contact Export-specific output formatting.
 """
 
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError as e:
+    print("ERROR: pandas could not be imported. Please ensure it's installed:")
+    print("   pip install pandas>=1.5.0")
+    print(f"   Import error: {e}")
+    raise
+
 import sys
 import os
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
+
+try:
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, Alignment
+except ImportError as e:
+    print("ERROR: openpyxl could not be imported. Please ensure it's installed:")
+    print("   pip install openpyxl>=3.0.0")
+    print(f"   Import error: {e}")
+    raise
 
 # Add project root to path for imports
 project_root = Path(__file__).parent.parent.parent
@@ -49,7 +65,7 @@ class ExportProcessor:
         Returns:
             Tuple of (processed_data, removed_rows)
         """
-        print("🔄 Processing Contact Export using unified core logic...")
+        print("Processing Contact Export using unified core logic...")
         
         # Store original source data for removed row tracking
         if original_source_data is not None:
@@ -71,7 +87,7 @@ class ExportProcessor:
         # Combine all removed rows
         removed_rows.extend(export_removed_rows)
         
-        print(f"✅ Contact Export processing complete using unified logic")
+        print(f"Contact Export processing complete using unified logic")
         print(f"   Records processed: {len(processed_data)}")
         print(f"   Records removed: {len(removed_rows)}")
         
@@ -105,7 +121,7 @@ class ExportProcessor:
             df_processed = df_processed[df_processed['Salesperson'].str.strip() != 'ACCOUNTS RECEIVABLE']
             removed_accounts = initial_count - len(df_processed)
             if removed_accounts > 0:
-                print(f"✅ Removed {removed_accounts} rows with 'Accounts Receivable' as Salesperson")
+                print(f"Removed {removed_accounts} rows with 'Accounts Receivable' as Salesperson")
         
         # 2. Apply Contact Export-specific data cleaning
         df_processed = self._clean_contact_export_data(df_processed)
@@ -130,7 +146,7 @@ class ExportProcessor:
         
         removed_no_names = initial_count - len(df_processed)
         if removed_no_names > 0:
-            print(f"✅ Removed {removed_no_names} rows without valid person names")
+            print(f"Removed {removed_no_names} rows without valid person names")
         
         # 4. Remove duplicate rows based on email
         initial_count = len(df_processed)
@@ -140,7 +156,7 @@ class ExportProcessor:
         
         removed_duplicates = initial_count - len(df_processed)
         if removed_duplicates > 0:
-            print(f"✅ Removed {removed_duplicates} duplicate rows based on email")
+                            print(f"Removed {removed_duplicates} duplicate rows based on email")
         
         return df_processed, removed_rows
     
@@ -210,8 +226,6 @@ class ExportProcessor:
             removed_rows: Rows that were removed during processing
             output_file: Path to output file
         """
-        from openpyxl import Workbook
-        from openpyxl.styles import Font, Alignment
         
         wb = Workbook()
         

@@ -11,64 +11,103 @@ The Contact Export workflow is **production-ready** and has been thoroughly test
 ```
 data_cleaner/
 ├── core/                           # Core processing engine
-│   ├── __init__.py
-│   ├── data_processor.py          # Unified data processing logic
-│   ├── llm_engine.py              # LLM integration (OpenAI + Ollama)
-│   ├── name_parser.py             # Name extraction and parsing
-│   └── uncertainty_detector.py    # Human-in-the-loop learning system
 ├── workflows/                      # Workflow processors
-│   ├── broadly_survey/            # Survey workflow
-│   └── contact_export/            # Contact Export workflow
 ├── config/                         # Configuration management
-│   └── config.py                  # Environment and config handling
 ├── cli/                           # Command-line interface
-│   └── cli.py                     # CLI implementation
 ├── processors/                     # Data processors
-│   └── processors.py              # Processing utilities
 ├── main.py                        # 🎯 MAIN ENTRY POINT
-├── workflows/contact_export/export_processor.py  # 🎯 PRODUCTION Contact Export processor
 ├── test_config.json               # 🎯 PRODUCTION Configuration
-├── DEVELOPMENT_GUIDELINES.md      # Development standards
 ├── .project_root                  # Project root marker
 ├── test/                          # 🧪 Testing and validation
-│   ├── test_output/               # Test output files
-│   ├── test_*.py                  # Test scripts
-│   ├── check_*.py                 # Output validation scripts
-│   └── analyze_*.py               # Data analysis scripts
-├── dev/                           # 🛠️ Development and documentation
-│   ├── archon_project.json        # Task tracking
-│   ├── SESSION_SUMMARY_20250821.md # Session documentation
-│   ├── archon_tasks.py            # Local task management
-│   ├── dev_setup.ps1              # Development environment setup
-│   └── setup_archon_project.py    # Project setup utilities
-└── project_docs/                  # Project documentation
-    ├── PRD.md                     # Product Requirements Document
-    ├── TECHNICAL_ARCHITECTURE.md  # Technical specifications
-    ├── DEVELOPMENT_ROADMAP.md     # Development timeline
-    ├── TESTING_STRATEGY.md        # Testing approach
-    ├── CHANGELOG.md               # Version history
-    └── CONTRIBUTING.md            # Contribution guidelines
+├── dev/                           # 🛠️ Development utilities
+└── project_docs/                  # 📚 Comprehensive project documentation
 ```
+
+**📖 For detailed project information, see [project_docs/README.md](project_docs/README.md)**
+
+## 📚 **Documentation**
+
+All project documentation has been reorganized for better accessibility:
+
+- **📖 [project_docs/README.md](project_docs/README.md)** - Comprehensive project overview and organization
+- **🔧 [project_docs/DEVELOPMENT_GUIDELINES.md](project_docs/DEVELOPMENT_GUIDELINES.md)** - Development standards and file location rules
+- **🌿 [project_docs/GIT_WORKFLOW.md](project_docs/GIT_WORKFLOW.md)** - Git workflow and branching strategy
+- **📋 [project_docs/TASK_STATUS.md](project_docs/TASK_STATUS.md)** - Current task status and progress
+- **📝 [project_docs/CHANGELOG.md](project_docs/CHANGELOG.md)** - Version history and changes
+- **🏗️ [project_docs/TECHNICAL_ARCHITECTURE.md](project_docs/TECHNICAL_ARCHITECTURE.md)** - System design and architecture
+- **🚀 [project_docs/DEVELOPMENT_ROADMAP.md](project_docs/DEVELOPMENT_ROADMAP.md)** - Implementation plan and milestones
+- **🧪 [project_docs/TESTING_STRATEGY.md](project_docs/TESTING_STRATEGY.md)** - Testing approach and quality gates
+- **🤝 [project_docs/CONTRIBUTING.md](project_docs/CONTRIBUTING.md)** - Contribution guidelines
+- **📋 [project_docs/PRD.md](project_docs/PRD.md)** - Product requirements document
 
 ## 🎯 **Quick Start**
 
 ### **Prerequisites**
-- Python 3.10+
+- Python 3.12+ (recommended) or Python 3.10+
 - OpenAI API key (or Ollama for local LLM)
-- Required packages: `pandas`, `openpyxl`, `openai`
+- Virtual environment support (recommended)
+
+### **Environment Setup**
+
+#### **Option 1: Use Virtual Environment (Recommended)**
+```bash
+# Navigate to project directory
+cd "C:\LocalAI\!projects\Stuart\data_cleaner"
+
+# Use virtual environment Python
+C:\LocalAI\.venv\Scripts\python.exe main.py contact <input_file.xlsx>
+```
+
+#### **Option 2: Use System Python**
+```bash
+# Navigate to project directory
+cd "C:\LocalAI\!projects\Stuart\data_cleaner"
+
+# Install dependencies (if not already installed)
+python -m pip install -r requirements.txt
+
+# Run the application
+python main.py contact <input_file.xlsx>
+```
+
+#### **Option 3: Import Diagnostic**
+```bash
+# Run the diagnostic script to check setup
+python fix_imports.py
+```
+
+#### **Option 4: Project Status Check**
+```bash
+# View current project status
+# See project_docs/TASK_STATUS.md for detailed overview
+# See project_docs/TASK_STATUS.md for task progress
+```
 
 ### **Configuration**
 1. Copy `test_config.json` to your production config
 2. Update with your OpenAI API key and settings
 3. Adjust processing parameters as needed
 
+### **IDE Setup (Cursor/VS Code)**
+1. **Open Command Palette** (`Ctrl+Shift+P`)
+2. **Select "Python: Select Interpreter"**
+3. **Choose**: `C:\LocalAI\.venv\Scripts\python.exe`
+
 ### **Run Contact Export**
 ```bash
+# Using virtual environment (recommended)
+C:\LocalAI\.venv\Scripts\python.exe main.py contact <input_file.xlsx>
+
+# Using system Python
 python main.py contact <input_file.xlsx>
 ```
 
 ### **Run Survey Processing**
 ```bash
+# Using virtual environment (recommended)
+C:\LocalAI\.venv\Scripts\python.exe main.py survey <input_file.xlsx>
+
+# Using system Python
 python main.py survey <input_file.xlsx>
 ```
 
@@ -113,8 +152,14 @@ Development utilities and documentation are in the `dev/` folder:
 - `SESSION_SUMMARY_20250821.md` - Session progress documentation
 - `dev_setup.ps1` - Development environment setup
 
+### **Project Management Tools**
+- `project_docs/TASK_STATUS.md` - Current task status and progress
+- `project_docs/TASK_STATUS.md` - Detailed task progress tracking
+- `commit_changes.py` - Automated git commit script
+- `fix_imports.py` - Import diagnostic and troubleshooting tool
+
 ### **Development Guidelines**
-See `DEVELOPMENT_GUIDELINES.md` for coding standards and workflow.
+See `project_docs/DEVELOPMENT_GUIDELINES.md` for coding standards and workflow.
 
 ## 📊 **Performance**
 
@@ -137,6 +182,61 @@ See `DEVELOPMENT_GUIDELINES.md` for coding standards and workflow.
 
 ### **Data Privacy**
 - All processing is local by default
+
+## 🚨 **Troubleshooting**
+
+### **Common Import Errors**
+
+#### **"Import 'pandas' could not be resolved"**
+```bash
+# Solution 1: Use virtual environment
+C:\LocalAI\.venv\Scripts\python.exe -c "import pandas; print('OK')"
+
+# Solution 2: Install for current Python version
+python -m pip install pandas openpyxl
+
+# Solution 3: Run diagnostic script
+python fix_imports.py
+```
+
+#### **"ModuleNotFoundError: No module named 'requests'"**
+```bash
+# Install missing dependencies
+python -m pip install -r requirements.txt
+
+# Or install specific package
+python -m pip install requests
+```
+
+#### **Python Version Mismatch**
+```bash
+# Check Python version
+python --version
+
+# Use virtual environment (recommended)
+C:\LocalAI\.venv\Scripts\python.exe --version
+```
+
+### **Environment Issues**
+
+#### **Virtual Environment Not Working**
+```bash
+# Check if virtual environment exists
+dir C:\LocalAI\.venv\Scripts\
+
+# Activate manually (if needed)
+C:\LocalAI\.venv\Scripts\python.exe
+```
+
+#### **IDE Import Issues**
+1. **Cursor/VS Code**: Select correct Python interpreter
+2. **PyCharm**: Configure project interpreter
+3. **Jupyter**: Install ipykernel in virtual environment
+
+### **Performance Issues**
+- **Large Files**: Use batch processing
+- **Memory Issues**: Check available RAM
+- **LLM Timeouts**: Adjust timeout settings in config
 - LLM API calls only send necessary data for name parsing
 - No customer data is stored or transmitted unnecessarily
 
@@ -167,9 +267,38 @@ See `DEVELOPMENT_GUIDELINES.md` for coding standards and workflow.
 - LLM prompt refinement based on edge cases
 - Performance optimization for large datasets
 
+## 🔧 **Git Operations**
+
+### **Automated Commit Script**
+```bash
+# Use the automated commit script for all changes
+python commit_changes.py
+```
+
+### **Manual Git Operations**
+```bash
+# Check status
+git status
+
+# Add all changes
+git add .
+
+# Commit with descriptive message
+git commit -m "Description of changes"
+
+# Push to remote (if configured)
+git push
+```
+
+### **Commit Guidelines**
+- Use descriptive commit messages
+- Include issue/task references when applicable
+- Group related changes in single commits
+- Test before committing
+
 ---
 
-**Version**: 1.0.0  
-**Status**: 🎯 **PRODUCTION READY**  
-**Last Updated**: August 21, 2025  
-**Confidence Level**: 🚀 **HIGH - System is production-ready**
+**Version**: 1.0.2  
+**Status**: 🎯 **PRODUCTION READY - Documentation Reorganized**  
+**Last Updated**: January 8, 2025  
+**Confidence Level**: 🚀 **HIGH - System is production-ready and development-ready**
