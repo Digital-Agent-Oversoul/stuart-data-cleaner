@@ -14,13 +14,13 @@ def test_api_key():
     print("🔑 Testing OpenAI API Key")
     print("=" * 40)
     
-    # Load configuration
-    config_file = Path(__file__).parent / "test_config.json"
+    # Load configuration from the correct path
+    config_file = Path(__file__).parent.parent / "test_config.json"
     with open(config_file, 'r') as f:
         config = json.load(f)
     
-    api_key = config['llm']['openai_api_key']
-    model = config['llm']['openai_model']
+    api_key = config['openai']['api_key']
+    model = config['openai']['model']
     
     print(f"API Key: {api_key[:20]}...{api_key[-4:]}")
     print(f"Model: {model}")

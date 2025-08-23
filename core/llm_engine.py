@@ -118,7 +118,13 @@ class OpenAIProcessor:
             )
     
     def _build_prompt(self, contact_name: str, customer_name: str, email: str) -> str:
-        """Build the comprehensive prompt for name parsing"""
+        """Build the comprehensive prompt for name parsing (same as OpenAI)"""
+        # Use the same comprehensive prompt as OpenAI for consistency
+        return OpenAIProcessor._build_name_parsing_prompt(contact_name, customer_name, email)
+    
+    @staticmethod
+    def _build_name_parsing_prompt(contact_name: str, customer_name: str, email: str) -> str:
+        """Build the comprehensive prompt for name parsing (static method for sharing)"""
         return f"""You are a data cleaning expert. Extract the best person's name from the provided fields.
 
 CRITICAL: Return ONLY valid JSON. NO comments, explanations, or additional text.
@@ -197,6 +203,7 @@ MISSING INFORMATION:
 - Better to have incomplete but accurate data than incorrect data
 - For pure business names with no person information, return null for both names
 
+INPUT DATA:
 Contact Name: "{contact_name}"
 Customer Name: "{customer_name}"
 Email: "{email}"
@@ -228,7 +235,30 @@ class OllamaProcessor:
     def parse_name(self, contact_name: str, customer_name: str, email: str) -> LLMResponse:
         """Parse name using Ollama local LLM"""
         try:
+            # Input validation: Check for empty/None values
+            if not contact_name or str(contact_name).strip() == '' or str(contact_name).lower() in ['nan', 'none', 'null']:
+                contact_name = ''
+            if not customer_name or str(customer_name).strip() == '' or str(customer_name).lower() in ['nan', 'none', 'null']:
+                customer_name = ''
+            if not email or str(email).strip() == '' or str(email).lower() in ['nan', 'none', 'null']:
+                email = ''
+            
+            # If all inputs are empty, return null names without calling LLM
+            if not contact_name and not customer_name and not email:
+                logger.debug("All input fields are empty, returning null names")
+                return LLMResponse(
+                    first_name=None,
+                    last_name=None,
+                    confidence=0.0,
+                    processing_method="ollama",
+                    metadata={"model": self.model, "reason": "empty_input"},
+                    success=True
+                )
+            
             prompt = self._build_prompt(contact_name, customer_name, email)
+            
+            # Debug: Log the prompt being sent
+            logger.debug(f"Ollama prompt for {contact_name}|{customer_name}|{email}: {prompt[:200]}...")
             
             response = requests.post(
                 f"{self.base_url}/api/generate",
@@ -251,15 +281,24 @@ class OllamaProcessor:
             result = response.json()
             content = result.get('response', '').strip()
             
+            # Debug: Log the raw response
+            logger.debug(f"Ollama raw response: {content}")
+            
+            # Also log the full result for debugging
+            logger.debug(f"Ollama full result: {result}")
+            
             # Parse JSON response with improved error handling
             parsed = self._parse_ollama_response(content)
+            
+            # Debug: Log the parsed result
+            logger.debug(f"Ollama parsed result: {parsed}")
             
             return LLMResponse(
                 first_name=parsed.get('first_name'),
                 last_name=parsed.get('last_name'),
                 confidence=0.7,  # Medium confidence for Ollama
                 processing_method="ollama",
-                metadata={"model": self.model, "response_length": len(content)},
+                metadata={"model": self.model, "response_length": len(content), "raw_response": content},
                 success=True
             )
             
@@ -277,17 +316,18 @@ class OllamaProcessor:
     
     def _build_prompt(self, contact_name: str, customer_name: str, email: str) -> str:
         """Build the comprehensive prompt for name parsing (same as OpenAI)"""
-        # Use the same prompt as OpenAI for consistency
-        return OpenAIProcessor._build_prompt(self, contact_name, customer_name, email)
+        # Use the same comprehensive prompt as OpenAI for consistency
+        return OpenAIProcessor._build_name_parsing_prompt(contact_name, customer_name, email)
     
     def _parse_ollama_response(self, content: str) -> Dict[str, Any]:
-        """Parse Ollama response with improved error handling"""
+        """Parse Ollama response with improved error handling (from working script)"""
         try:
-            # Clean up common JSON formatting issues
+            # Try to clean up common JSON formatting issues
             content_clean = content.strip()
             
             # Remove any trailing comments or explanations after the JSON
             if '//' in content_clean:
+                # Find the first // and remove everything after it, then try to close JSON
                 comment_pos = content_clean.find('//')
                 json_part = content_clean[:comment_pos].strip()
                 # Check if we need to close brackets/braces
@@ -303,11 +343,89 @@ class OllamaProcessor:
             if start_brace != -1 and end_brace != -1 and end_brace > start_brace:
                 content_clean = content_clean[start_brace:end_brace + 1]
             
-            return json.loads(content_clean)
+            # Try to parse the JSON
+            parsed = json.loads(content_clean)
+            
+            # Validate that we have the expected structure
+            if not isinstance(parsed, dict):
+                logger.warning(f"Ollama response is not a dict: {type(parsed)}")
+                return {"first_name": None, "last_name": None}
+            
+            # Ensure we have the expected keys
+            if 'first_name' not in parsed or 'last_name' not in parsed:
+                logger.warning(f"Ollama response missing expected keys: {list(parsed.keys())}")
+                # Try to map common variations
+                if 'first' in parsed:
+                    parsed['first_name'] = parsed.pop('first')
+                if 'last' in parsed:
+                    parsed['last_name'] = parsed.pop('last')
+                if 'firstName' in parsed:
+                    parsed['first_name'] = parsed.pop('firstName')
+                if 'lastName' in parsed:
+                    parsed['last_name'] = parsed.pop('lastName')
+            
+            logger.debug(f"Successfully parsed Ollama response: {parsed}")
+            return parsed
             
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse Ollama JSON response: {e}")
+            logger.error(f"Raw content was: {content}")
             return {"first_name": None, "last_name": None}
+        except Exception as e:
+            logger.error(f"Unexpected error parsing Ollama response: {e}")
+            return {"first_name": None, "last_name": None}
+    
+    def test_simple_parsing(self) -> Dict[str, Any]:
+        """Test simple name parsing to debug issues"""
+        try:
+            # Test with a very simple prompt
+            simple_prompt = """Extract the first and last name from this data. Return only JSON.
+
+Contact Name: "John Smith"
+Customer Name: "Smith, John"
+Email: "john.smith@email.com"
+
+Return: {"first_name": "John", "last_name": "Smith"}"""
+            
+            logger.info("🧪 Testing Ollama with simple prompt...")
+            
+            response = requests.post(
+                f"{self.base_url}/api/generate",
+                json={
+                    "model": self.model,
+                    "prompt": simple_prompt,
+                    "stream": False,
+                    "context": [],
+                    "options": {
+                        "temperature": 0.1,
+                        "num_predict": 100
+                    }
+                },
+                timeout=30
+            )
+            
+            if response.status_code != 200:
+                return {"error": f"HTTP {response.status_code}", "success": False}
+            
+            result = response.json()
+            content = result.get('response', '').strip()
+            
+            logger.info(f"🧪 Ollama raw test response: {content}")
+            
+            # Try to parse the response
+            parsed = self._parse_ollama_response(content)
+            logger.info(f"🧪 Ollama parsed test response: {parsed}")
+            
+            return {
+                "success": True,
+                "raw_response": content,
+                "parsed_response": parsed,
+                "model": self.model
+            }
+            
+        except Exception as e:
+            logger.error(f"🧪 Ollama test failed: {e}")
+            return {"error": str(e), "success": False}
 
 class RuleBasedProcessor:
     """Rule-based fallback for when LLM processing fails"""
@@ -398,32 +516,13 @@ class LLMEngine:
     """Unified LLM engine with OpenAI + Ollama fallback system"""
     
     def __init__(self, config: Dict[str, Any]):
+        """
+        Initialize LLM engine with configuration
+        
+        Args:
+            config: Configuration dictionary with 'openai' and 'ollama' sections
+        """
         self.config = config
-        self.budget_monitor = BudgetMonitor(
-            monthly_budget=config.get('openai', {}).get('monthly_budget', 10.00),
-            alert_threshold=config.get('openai', {}).get('alert_threshold', 0.8)
-        )
-        
-        # Initialize processors
-        openai_config = config.get('openai', {})
-        self.openai_processor = OpenAIProcessor(
-            api_key=openai_config.get('api_key'),
-            model=openai_config.get('model', 'gpt-4o-mini'),
-            max_tokens=openai_config.get('max_tokens', 150),
-            temperature=openai_config.get('temperature', 0.1)
-        )
-        
-        ollama_config = config.get('ollama', {})
-        self.ollama_processor = OllamaProcessor(
-            base_url=ollama_config.get('base_url', 'http://localhost:11434'),
-            model=ollama_config.get('model', 'qwen2.5:7b-instruct-q4_K_M'),
-            max_tokens=ollama_config.get('max_tokens', 150),
-            temperature=ollama_config.get('temperature', 0.1)
-        )
-        
-        self.rule_processor = RuleBasedProcessor()
-        
-        # Processing statistics
         self.stats = ProcessingStats(
             total_records=0,
             llm_processed=0,
@@ -432,51 +531,201 @@ class LLMEngine:
             errors=0,
             start_time=datetime.now()
         )
+        
+        # Initialize OpenAI processor if API key is available
+        openai_config = config.get('openai', {})
+        if openai_config.get('api_key'):
+            self.openai_processor = OpenAIProcessor(
+                api_key=openai_config['api_key'],
+                model=openai_config.get('model', 'gpt-4o-mini'),
+                max_tokens=openai_config.get('max_tokens', 150),
+                temperature=openai_config.get('temperature', 0.1)
+            )
+        else:
+            self.openai_processor = None
+            logger.warning("OpenAI API key not provided, OpenAI processing disabled")
+        
+        # Initialize Ollama processor
+        ollama_config = config.get('ollama', {})
+        self.ollama_processor = OllamaProcessor(
+            base_url=ollama_config.get('base_url', 'http://localhost:11434'),
+            model=ollama_config.get('model', 'qwen2.5:7b-instruct-q4_K_M'),
+            max_tokens=150,  # Use proven working limit from working script
+            temperature=0.1
+        )
+        
+        # Initialize rule-based processor
+        self.rule_processor = RuleBasedProcessor()
+        
+        # Initialize budget monitor
+        self.budget_monitor = BudgetMonitor(
+            monthly_budget=config.get('monthly_budget', 10.00),
+            alert_threshold=config.get('alert_threshold', 0.8)
+        )
+        
+        # Get retry configuration
+        self.max_retries = config.get('max_retries', 3)
+        self.retry_delay_ms = config.get('retry_delay_ms', 1000)
+        self.show_progress = config.get('show_progress', True)
+        
+        # Perform health checks
+        self._perform_health_checks()
+    
+    def _perform_health_checks(self):
+        """Check availability of OpenAI and Ollama services"""
+        logger.info("🔍 Performing LLM service health checks...")
+        
+        # Check OpenAI
+        if self.openai_processor:
+            try:
+                # Test with a simple prompt
+                test_response = self.openai_processor.parse_name("John", "Smith", "john.smith@email.com")
+                if test_response.success:
+                    logger.info("✅ OpenAI: Service available and responding correctly")
+                else:
+                    logger.warning(f"⚠️  OpenAI: Service responding but with errors: {test_response.error_message}")
+            except Exception as e:
+                logger.error(f"❌ OpenAI: Service unavailable - {e}")
+        else:
+            logger.info("ℹ️  OpenAI: Not configured (no API key)")
+        
+        # Check Ollama
+        try:
+            # Test with a simple prompt
+            test_response = self.ollama_processor.parse_name("John", "Smith", "john.smith@email.com")
+            if test_response.success:
+                logger.info("✅ Ollama: Service available and responding correctly")
+                # Log the actual response for debugging
+                logger.info(f"   Ollama test response: first_name='{test_response.first_name}', last_name='{test_response.last_name}'")
+                
+                # If we got None values, run the simple test
+                if test_response.first_name is None and test_response.last_name is None:
+                    logger.warning("⚠️  Ollama returned None values - running simple test...")
+                    simple_test = self.ollama_processor.test_simple_parsing()
+                    if simple_test.get("success"):
+                        logger.info(f"🧪 Simple test result: {simple_test.get('parsed_response')}")
+                    else:
+                        logger.error(f"🧪 Simple test failed: {simple_test.get('error')}")
+            else:
+                logger.warning(f"⚠️  Ollama: Service responding but with errors: {test_response.error_message}")
+        except Exception as e:
+            logger.error(f"❌ Ollama: Service unavailable - {e}")
+        
+        # Check rule-based processor
+        try:
+            test_response = self.rule_processor.parse_name("John", "Smith", "john.smith@email.com")
+            if test_response.success:
+                logger.info("✅ Rule-based: Fallback processor working correctly")
+            else:
+                logger.warning(f"⚠️  Rule-based: Fallback processor has issues: {test_response.error_message}")
+        except Exception as e:
+            logger.error(f"❌ Rule-based: Fallback processor unavailable - {e}")
+        
+        logger.info("🔍 Health checks completed")
     
     def parse_name(self, contact_name: str, customer_name: str, email: str) -> LLMResponse:
-        """Parse name using the unified LLM engine with fallback system"""
+        """
+        Parse name using multi-tier LLM system with retry logic and progress reporting
+        
+        Args:
+            contact_name: Contact name field
+            customer_name: Customer name field  
+            email: Email address field
+            
+        Returns:
+            LLMResponse with parsed name and processing details
+        """
         self.stats.total_records += 1
         
-        # Try OpenAI first (if budget allows)
-        if self.budget_monitor.check_budget(0.01):  # Estimate $0.01 per request
+        # Try OpenAI first (if available)
+        if self.openai_processor:
+            if self.show_progress:
+                print(f"🔄 Processing: {contact_name} | {customer_name} | {email}")
+            
+            for attempt in range(self.max_retries):
+                try:
+                    if self.show_progress and attempt > 0:
+                        print(f"   ⚠️  Retry {attempt + 1}/{self.max_retries} for OpenAI")
+                    
+                    result = self.openai_processor.parse_name(contact_name, customer_name, email)
+                    
+                    if result.success:
+                        self.stats.llm_processed += 1
+                        if self.show_progress:
+                            print(f"   ✅ OpenAI: {result.first_name} {result.last_name} (confidence: {result.confidence:.2f})")
+                        return result
+                    else:
+                        if self.show_progress:
+                            print(f"   ❌ OpenAI failed: {result.error_message}")
+                        
+                except Exception as e:
+                    if self.show_progress:
+                        print(f"   ❌ OpenAI error (attempt {attempt + 1}): {str(e)}")
+                    
+                    # Wait before retry (if not the last attempt)
+                    if attempt < self.max_retries - 1:
+                        import time
+                        time.sleep(self.retry_delay_ms / 1000.0)
+                    continue
+            
+            if self.show_progress:
+                print(f"   🔄 OpenAI failed after {self.max_retries} attempts, trying Ollama...")
+        
+        # Try Ollama as fallback
+        if self.show_progress:
+            print(f"   🔄 Trying Ollama fallback...")
+            
+        for attempt in range(self.max_retries):
             try:
-                result = self.openai_processor.parse_name(contact_name, customer_name, email)
+                if attempt > 0:
+                    print(f"   ⚠️  Retry {attempt + 1}/{self.max_retries} for Ollama")
+                
+                result = self.ollama_processor.parse_name(contact_name, customer_name, email)
+                
                 if result.success:
-                    self.stats.llm_processed += 1
-                    self.budget_monitor.add_cost(0.01)
+                    self.stats.ollama_fallback += 1
+                    if self.show_progress:
+                        print(f"   ✅ Ollama: {result.first_name} {result.last_name} (confidence: {result.confidence:.2f})")
                     return result
+                else:
+                    if self.show_progress:
+                        print(f"   ❌ Ollama failed: {result.error_message}")
+                    
             except Exception as e:
-                logger.warning(f"OpenAI failed, falling back to Ollama: {e}")
+                if self.show_progress:
+                    print(f"   ❌ Ollama error (attempt {attempt + 1}): {str(e)}")
+                
+                # Wait before retry (if not the last attempt)
+                if attempt < self.max_retries - 1:
+                    import time
+                    time.sleep(self.retry_delay_ms / 1000.0)
+                continue
         
-        # Fallback to Ollama
-        try:
-            result = self.ollama_processor.parse_name(contact_name, customer_name, email)
-            if result.success:
-                self.stats.ollama_fallback += 1
-                return result
-        except Exception as e:
-            logger.warning(f"Ollama failed, falling back to rule-based: {e}")
+        if self.show_progress:
+            print(f"   🔄 Ollama failed after {self.max_retries} attempts, using rule-based fallback...")
         
-        # Final fallback to rule-based processing
+        # Use rule-based processing as final fallback
         try:
             result = self.rule_processor.parse_name(contact_name, customer_name, email)
-            if result.success:
-                self.stats.rule_based_fallback += 1
-                return result
+            self.stats.rule_based_fallback += 1
+            if self.show_progress:
+                print(f"   ✅ Rule-based: {result.first_name} {result.last_name} (confidence: {result.confidence:.2f})")
+            return result
         except Exception as e:
-            logger.error(f"All processing methods failed: {e}")
             self.stats.errors += 1
-        
-        # If all methods fail, return error response
-        return LLMResponse(
-            first_name=None,
-            last_name=None,
-            confidence=0.0,
-            processing_method="failed",
-            metadata={"error": "All processing methods failed"},
-            success=False,
-            error_message="All processing methods failed"
-        )
+            if self.show_progress:
+                print(f"   ❌ Rule-based failed: {str(e)}")
+            
+            # Return error response
+            return LLMResponse(
+                first_name=None,
+                last_name=None,
+                confidence=0.0,
+                processing_method="error",
+                metadata={"error": str(e)},
+                success=False,
+                error_message=f"All processing methods failed: {str(e)}"
+            )
     
     def get_stats(self) -> ProcessingStats:
         """Get current processing statistics"""

@@ -30,7 +30,12 @@ class SurveyProcessor:
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
-        self.llm_engine = LLMEngine(config.get('llm', {}))
+        # Transform config structure to match LLM engine expectations
+        llm_config = {
+            'openai': config.get('llm', {}),
+            'ollama': config.get('llm', {})
+        }
+        self.llm_engine = LLMEngine(llm_config)
         self.name_parser = NameParser(self.llm_engine)
         self.data_processor = DataProcessor(config)
         

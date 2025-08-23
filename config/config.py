@@ -8,6 +8,9 @@ for the unified data cleaning system.
 import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
+import logging
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class LLMConfig:
@@ -37,6 +40,9 @@ class ProcessingConfig:
     confidence_threshold: float = 0.3
     enable_uncertainty_detection: bool = True
     enable_interactive_learning: bool = True
+    show_progress: bool = True
+    max_retries: int = 3
+    retry_delay_ms: int = 1000
 
 @dataclass
 class UncertaintyConfig:
@@ -64,21 +70,26 @@ class Config:
         Args:
             config_file: Optional path to configuration file
         """
-        # Load environment variables
-        self._load_environment_vars()
-        
-        # Load configuration file if provided
-        if config_file and os.path.exists(config_file):
-            self._load_config_file(config_file)
-        
-        # Initialize sub-configurations
+        # Initialize sub-configurations first
         self.llm = LLMConfig()
         self.budget = BudgetConfig()
         self.processing = ProcessingConfig()
         self.uncertainty = UncertaintyConfig()
         self.output = OutputConfig()
         
-        # Apply environment variable overrides
+        # Load environment variables
+        self._load_environment_vars()
+        
+        # Load configuration file if provided, or try to load default config.json
+        if config_file and os.path.exists(config_file):
+            self._load_config_file(config_file)
+        else:
+            # Try to load default config.json in the same directory as this file
+            default_config_path = os.path.join(os.path.dirname(__file__), 'config.json')
+            if os.path.exists(default_config_path):
+                self._load_config_file(default_config_path)
+        
+        # Apply environment variable overrides (these take precedence)
         self._apply_env_overrides()
     
     def _load_environment_vars(self):
@@ -93,28 +104,138 @@ class Config:
         }
     
     def _load_config_file(self, config_file: str):
-        """Load configuration from file (placeholder for future implementation)"""
-        # TODO: Implement JSON/YAML configuration file loading
-        pass
+        """Load configuration from JSON configuration file"""
+        import json
+        try:
+            with open(config_file, 'r') as f:
+                config_data = json.load(f)
+            
+            # Load LLM configuration
+            if 'llm' in config_data:
+                llm_data = config_data['llm']
+                if 'openai_api_key' in llm_data:
+                    self.llm.openai_api_key = llm_data['openai_api_key']
+                if 'openai_model' in llm_data:
+                    self.llm.openai_model = llm_data['openai_model']
+                if 'openai_base_url' in llm_data:
+                    self.llm.openai_base_url = llm_data['openai_base_url']
+                if 'ollama_base_url' in llm_data:
+                    self.llm.ollama_base_url = llm_data['ollama_base_url']
+                if 'ollama_model' in llm_data:
+                    self.llm.ollama_model = llm_data['ollama_model']
+                if 'max_tokens' in llm_data:
+                    self.llm.max_tokens = llm_data['max_tokens']
+                if 'temperature' in llm_data:
+                    self.llm.temperature = llm_data['temperature']
+                if 'timeout_seconds' in llm_data:
+                    self.llm.timeout_seconds = llm_data['timeout_seconds']
+            
+            # Load budget configuration
+            if 'budget' in config_data:
+                budget_data = config_data['budget']
+                if 'openai_cost_per_1k_tokens' in budget_data:
+                    self.budget.openai_cost_per_1k_tokens = budget_data['openai_cost_per_1k_tokens']
+                if 'max_daily_cost' in budget_data:
+                    self.budget.max_daily_cost = budget_data['max_daily_cost']
+                if 'max_total_cost' in budget_data:
+                    self.budget.max_total_cost = budget_data['max_total_cost']
+                if 'warn_at_percentage' in budget_data:
+                    self.budget.warn_at_percentage = budget_data['warn_at_percentage']
+            
+            # Load processing configuration
+            if 'processing' in config_data:
+                processing_data = config_data['processing']
+                if 'batch_size' in processing_data:
+                    self.processing.batch_size = processing_data['batch_size']
+                if 'max_workers' in processing_data:
+                    self.processing.max_workers = processing_data['max_workers']
+                if 'confidence_threshold' in processing_data:
+                    self.processing.confidence_threshold = processing_data['confidence_threshold']
+                if 'enable_uncertainty_detection' in processing_data:
+                    self.processing.enable_uncertainty_detection = processing_data['enable_uncertainty_detection']
+                if 'enable_interactive_learning' in processing_data:
+                    self.processing.enable_interactive_learning = processing_data['enable_interactive_learning']
+                if 'show_progress' in processing_data:
+                    self.processing.show_progress = processing_data['show_progress']
+                if 'max_retries' in processing_data:
+                    self.processing.max_retries = processing_data['max_retries']
+                if 'retry_delay_ms' in processing_data:
+                    self.processing.retry_delay_ms = processing_data['retry_delay_ms']
+            
+            # Load uncertainty configuration
+            if 'uncertainty' in config_data:
+                uncertainty_data = config_data['uncertainty']
+                if 'low_confidence_threshold' in uncertainty_data:
+                    self.uncertainty.low_confidence_threshold = uncertainty_data['low_confidence_threshold']
+                if 'very_low_confidence_threshold' in uncertainty_data:
+                    self.uncertainty.very_low_confidence_threshold = uncertainty_data['very_low_confidence_threshold']
+                if 'enable_business_detection' in uncertainty_data:
+                    self.uncertainty.enable_business_detection = uncertainty_data['enable_business_detection']
+                if 'enable_edge_case_detection' in uncertainty_data:
+                    self.uncertainty.enable_edge_case_detection = uncertainty_data['enable_edge_case_detection']
+            
+            # Load output configuration
+            if 'output' in config_data:
+                output_data = config_data['output']
+                if 'output_directory' in output_data:
+                    self.output.output_directory = output_data['output_directory']
+                if 'backup_original' in output_data:
+                    self.output.backup_original = output_data['backup_original']
+                if 'create_summary_report' in output_data:
+                    self.output.create_summary_report = output_data['create_summary_report']
+                if 'enable_progress_tracking' in output_data:
+                    self.output.enable_progress_tracking = output_data['enable_progress_tracking']
+                    
+        except Exception as e:
+            print(f"Warning: Could not load configuration file {config_file}: {e}")
+            print("Using default configuration values.")
     
     def _apply_env_overrides(self):
         """Apply environment variable overrides to configuration"""
-        if self.env_config['OPENAI_API_KEY']:
+        # LLM configuration overrides
+        if self.env_config.get('OPENAI_API_KEY'):
             self.llm.openai_api_key = self.env_config['OPENAI_API_KEY']
-        
-        if self.env_config['OPENAI_MODEL']:
+        if self.env_config.get('OPENAI_MODEL'):
             self.llm.openai_model = self.env_config['OPENAI_MODEL']
-        
-        if self.env_config['OLLAMA_BASE_URL']:
+        if self.env_config.get('OLLAMA_BASE_URL'):
             self.llm.ollama_base_url = self.env_config['OLLAMA_BASE_URL']
-        
-        if self.env_config['OLLAMA_MODEL']:
+        if self.env_config.get('OLLAMA_MODEL'):
             self.llm.ollama_model = self.env_config['OLLAMA_MODEL']
         
-        if self.env_config['MAX_DAILY_COST']:
-            self.budget.max_daily_cost = float(self.env_config['MAX_DAILY_COST'])
+        # Budget configuration overrides
+        if self.env_config.get('MAX_DAILY_COST'):
+            try:
+                self.budget.max_daily_cost = float(self.env_config['MAX_DAILY_COST'])
+            except ValueError:
+                logger.warning(f"Invalid MAX_DAILY_COST value: {self.env_config['MAX_DAILY_COST']}")
         
-        if self.env_config['OUTPUT_DIRECTORY']:
+        # Processing configuration overrides
+        if self.env_config.get('MAX_TOKENS'):
+            try:
+                self.llm.max_tokens = int(self.env_config['MAX_TOKENS'])
+            except ValueError:
+                logger.warning(f"Invalid MAX_TOKENS value: {self.env_config['MAX_TOKENS']}")
+        
+        if self.env_config.get('TEMPERATURE'):
+            try:
+                self.llm.temperature = float(self.env_config['TEMPERATURE'])
+            except ValueError:
+                logger.warning(f"Invalid TEMPERATURE value: {self.env_config['TEMPERATURE']}")
+        
+        if self.env_config.get('BATCH_SIZE'):
+            try:
+                self.processing.batch_size = int(self.env_config['BATCH_SIZE'])
+            except ValueError:
+                logger.warning(f"Invalid BATCH_SIZE value: {self.env_config['BATCH_SIZE']}")
+        
+        if self.env_config.get('MAX_WORKERS'):
+            try:
+                self.processing.max_workers = int(self.env_config['MAX_WORKERS'])
+            except ValueError:
+                logger.warning(f"Invalid MAX_WORKERS value: {self.env_config['MAX_WORKERS']}")
+        
+        # Output configuration overrides
+        if self.env_config.get('OUTPUT_DIRECTORY'):
             self.output.output_directory = self.env_config['OUTPUT_DIRECTORY']
     
     def get_llm_config(self) -> Dict[str, Any]:
@@ -146,7 +267,10 @@ class Config:
             'max_workers': self.processing.max_workers,
             'confidence_threshold': self.processing.confidence_threshold,
             'enable_uncertainty_detection': self.processing.enable_uncertainty_detection,
-            'enable_interactive_learning': self.processing.enable_interactive_learning
+            'enable_interactive_learning': self.processing.enable_interactive_learning,
+            'show_progress': self.processing.show_progress,
+            'max_retries': self.processing.max_retries,
+            'retry_delay_ms': self.processing.retry_delay_ms
         }
     
     def get_uncertainty_config(self) -> Dict[str, Any]:

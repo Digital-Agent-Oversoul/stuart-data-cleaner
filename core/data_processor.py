@@ -11,6 +11,7 @@ from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime
 from .llm_engine import LLMEngine, LLMResponse
 from .name_parser import NameParser
+from .header_detector import load_data_with_header_detection
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,24 @@ class DataProcessor:
             config: Configuration dictionary containing LLM and processing settings
         """
         self.config = config
-        self.llm_engine = LLMEngine(config)
+        
+        # Transform config structure to match LLM engine expectations
+        llm_config = {
+            'openai': {
+                'api_key': self._get_config_value('openai_api_key') or self._get_config_value('llm.openai_api_key'),
+                'model': self._get_config_value('openai_model', 'gpt-4o-mini') or self._get_config_value('llm.openai_model', 'gpt-4o-mini'),
+                'max_tokens': self._get_config_value('max_tokens', 150) or self._get_config_value('llm.max_tokens', 150),
+                'temperature': self._get_config_value('temperature', 0.1) or self._get_config_value('llm.temperature', 0.1)
+            },
+            'ollama': {
+                'base_url': self._get_config_value('ollama_base_url', 'http://localhost:11434') or self._get_config_value('llm.ollama_base_url', 'http://localhost:11434'),
+                'model': self._get_config_value('ollama_model', 'qwen2.5:7b-instruct-q4_K_M') or self._get_config_value('llm.ollama_model', 'qwen2.5:7b-instruct-q4_K_M')
+            },
+            'max_retries': self._get_config_value('max_retries', 3) or self._get_config_value('processing.max_retries', 3),
+            'retry_delay_ms': self._get_config_value('retry_delay_ms', 1000) or self._get_config_value('processing.retry_delay_ms', 1000),
+            'show_progress': self._get_config_value('show_progress', True) or self._get_config_value('processing.show_progress', True)
+        }
+        self.llm_engine = LLMEngine(llm_config)
         self.name_parser = NameParser(self.llm_engine)
         
         # Processing statistics
@@ -40,6 +58,53 @@ class DataProcessor:
             'end_time': None
         }
         
+        # Performance optimization: lazy evaluation for removed rows
+        self._removed_rows_cache = None
+        self._retry_failure_indices = []
+    
+    def _get_config_value(self, key_path, default=None):
+        """Get config value from nested path, handling both dict and object access"""
+        if isinstance(self.config, dict):
+            # Handle dictionary access
+            if '.' in key_path:
+                parts = key_path.split('.')
+                current = self.config
+                for part in parts:
+                    if isinstance(current, dict) and part in current:
+                        current = current[part]
+                    else:
+                        return default
+                return current
+            else:
+                return self.config.get(key_path, default)
+        else:
+            # Handle object access
+            if '.' in key_path:
+                parts = key_path.split('.')
+                current = self.config
+                for part in parts:
+                    if hasattr(current, part):
+                        current = getattr(current, part)
+                    else:
+                        return default
+                return current
+            else:
+                return getattr(self.config, key_path, default)
+    
+    def load_data(self, file_path: str, sheet_name: str = 'Sheet1') -> pd.DataFrame:
+        """
+        Load data with intelligent header detection.
+        
+        Args:
+            file_path: Path to input file
+            sheet_name: Name of sheet to load
+            
+        Returns:
+            DataFrame with correct headers
+        """
+        logger.info(f"Loading data with header detection: {file_path}")
+        return load_data_with_header_detection(file_path, sheet_name)
+    
     def process_survey_data(self, data: pd.DataFrame, location_filter: Optional[str] = None) -> pd.DataFrame:
         """
         Process data for Broadly Survey output (location-segmented, smaller files)
@@ -115,7 +180,7 @@ class DataProcessor:
         cleaned_data = self._standardize_columns(cleaned_data)
         
         # Clean and parse names using the unified LLM engine
-        cleaned_data = self._clean_names(cleaned_data)
+        cleaned_data = self._clean_names_with_progress(cleaned_data)
         
         # Clean email addresses
         cleaned_data = self._clean_emails(cleaned_data)
@@ -287,30 +352,27 @@ class DataProcessor:
         return None
     
     def _remove_invalid_records(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Remove records that don't meet quality standards"""
-        logger.info("Removing invalid records")
+        """
+        Remove records marked for removal with performance optimization.
         
-        initial_count = len(data)
+        Args:
+            data: DataFrame with records to process
+            
+        Returns:
+            DataFrame with invalid records removed
+        """
+        # Use vectorized operation for better performance
+        valid_mask = data['_mark_for_removal'] == False
+        valid_data = data[valid_mask].copy()
         
-        # Remove records with no valid names
-        data = data[
-            (data['first_name'].notna()) & 
-            (data['first_name'] != '') &
-            (data['name_confidence'] > 0.3)  # Minimum confidence threshold
-        ]
+        removed_count = len(data) - len(valid_data)
+        logger.info(f"Removed {removed_count} invalid records")
         
-        # Remove records with no valid email
-        data = data[data['email'].notna()]
+        # Clean up processing columns
+        if '_mark_for_removal' in valid_data.columns:
+            valid_data = valid_data.drop(columns=['_mark_for_removal'])
         
-        # Remove completely empty rows
-        data = data.dropna(how='all')
-        
-        final_count = len(data)
-        removed_count = initial_count - final_count
-        
-        logger.info(f"Removed {removed_count} invalid records: {initial_count} -> {final_count}")
-        
-        return data
+        return valid_data
     
     def _apply_survey_transformations(self, data: pd.DataFrame) -> pd.DataFrame:
         """Apply survey-specific transformations"""
@@ -377,3 +439,80 @@ class DataProcessor:
             'end_time': None
         }
         self.llm_engine.reset_stats()
+
+    def get_retry_failure_indices(self) -> List[int]:
+        """
+        Get indices of records that failed after retry attempts.
+        
+        Returns:
+            List of row indices that failed processing
+        """
+        return self._retry_failure_indices.copy()
+    
+    def _clean_names_with_progress(self, data: pd.DataFrame) -> pd.DataFrame:
+        """
+        Clean names with progress reporting and retry logic.
+        
+        Args:
+            data: DataFrame with name data to clean
+            
+        Returns:
+            DataFrame with cleaned names and processing metadata
+        """
+        logger.info(f"Cleaning names for {len(data)} records...")
+        
+        # Add processing columns
+        data = data.copy()
+        data['_mark_for_removal'] = False
+        data['_processing_method'] = ''
+        data['_confidence_score'] = 0.0
+        data['_error_message'] = ''
+        
+        for idx, row in data.iterrows():
+            try:
+                # Extract name fields
+                contact_name = str(row.get('contact_name', '')).strip()
+                customer_name = str(row.get('customer_name', '')).strip()
+                email = str(row.get('email', '')).strip()
+                
+                # Handle pandas NaN values properly
+                if contact_name == 'nan' or pd.isna(row.get('contact_name')):
+                    contact_name = ''
+                if customer_name == 'nan' or pd.isna(row.get('customer_name')):
+                    customer_name = ''
+                if email == 'nan' or pd.isna(row.get('email')):
+                    email = ''
+                
+                if self._get_config_value('show_progress', True) or self._get_config_value('processing.show_progress', True):
+                    print(f"🔄 Processing row {idx + 1}: {contact_name} | {customer_name} | {email}")
+                
+                # Parse name using LLM engine
+                result = self.llm_engine.parse_name(contact_name, customer_name, email)
+                
+                if result.success:
+                    # Update row with parsed results
+                    data.at[idx, 'first_name'] = result.first_name
+                    data.at[idx, 'last_name'] = result.last_name
+                    data.at[idx, '_processing_method'] = result.processing_method
+                    data.at[idx, '_confidence_score'] = result.confidence
+                    
+                    if self._get_config_value('show_progress', True) or self._get_config_value('processing.show_progress', True):
+                        print(f"   ✅ Cleaned: {result.first_name} {result.last_name} (method: {result.processing_method}, confidence: {result.confidence:.2f})")
+                else:
+                    # Mark for removal if processing failed
+                    data.at[idx, '_mark_for_removal'] = True
+                    data.at[idx, '_error_message'] = result.error_message
+                    
+                    if self._get_config_value('show_progress', True) or self._get_config_value('processing.show_progress', True):
+                        print(f"   ❌ Failed: {result.error_message}")
+                    
+                    # Track retry failures
+                    self._retry_failure_indices.append(idx)
+                    
+            except Exception as e:
+                logger.error(f"Error processing row {idx}: {e}")
+                data.at[idx, '_mark_for_removal'] = True
+                data.at[idx, '_error_message'] = str(e)
+                self._retry_failure_indices.append(idx)
+        
+        return data
