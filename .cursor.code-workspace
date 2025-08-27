@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": ".cursor",
+			"path": "../../../Users/Oversoul/.cursor"
+		},
+		{
+			"name": "LocalAI",
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"powershell.cwd": "LocalAI"
+	}
+}

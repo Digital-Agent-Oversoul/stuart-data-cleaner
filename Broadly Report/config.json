@@ -1,0 +1,66 @@
+{
+  "llm": {
+    "openai": {
+      "enabled": true,
+      "model": "gpt-4o-mini",
+      "max_tokens": 200,
+      "temperature": 0.1,
+      "timeout": 30
+    },
+    "ollama": {
+      "enabled": true,
+      "base_url": "http://localhost:11434",
+      "model": "qwen2.5:7b-instruct-q4_K_M",
+      "timeout": 60,
+      "temperature": 0.1,
+      "max_tokens": 200
+    },
+    "budget": {
+      "monthly_limit": 10.0,
+      "alert_threshold": 0.8,
+      "cost_per_1k_tokens": 0.00015
+    }
+  },
+  "processing": {
+    "batch_size": 500,
+    "max_rows_for_llm": 1000,
+    "confidence_thresholds": {
+      "openai": 0.7,
+      "ollama": 0.6,
+      "rule_based": 0.5
+    },
+    "uncertainty_threshold": 0.7
+  },
+  "output": {
+    "survey": {
+      "base_directory": "Broadly Report/Broadly Cleaned",
+      "location_segments": ["Dublin", "Milpitas"],
+      "filename_prefix": "Broadly_Survey",
+      "test_prefix": "test_survey"
+    },
+    "contact_export": {
+      "base_directory": "Broadly Report/Email Contact Export",
+      "filename_prefix": "Contact_Export",
+      "test_prefix": "test_contact",
+      "include_removed_items": true
+    }
+  },
+  "learning": {
+    "enabled": true,
+    "patterns_file": "learning_patterns.json",
+    "save_user_decisions": true,
+    "confidence_learning": true
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "data_cleaning.log",
+    "max_size_mb": 10,
+    "backup_count": 5
+  },
+  "testing": {
+    "enabled": true,
+    "test_data_directory": "tests",
+    "output_test_files": true,
+    "test_filename_prefix": "test"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "workspace_name": "Stuart Multi-Project Workspace",
+  "workspace_root": "C:\\LocalAI\\!projects\\Stuart",
+  "cursor_workspace": "C:\\Users\\Oversoul\\.cursor",
+  "projects": {
+    "data_cleaner": {
+      "name": "Data Cleaner System",
+      "description": "Unified data cleaning engine with multiple workflows",
+      "root_path": "C:\\LocalAI\\!projects\\Stuart\\data_cleaner",
+      "project_type": "python",
+      "active": true,
+      "boundaries": {
+        "allowed_dirs": [
+          "core",
+          "config",
+          "workflows",
+          "tests",
+          "project_docs",
+          "cli",
+          "processors"
+        ],
+        "reference_dirs": [
+          "../Broadly Report",
+          "../docs",
+          "../broadly_app"
+        ]
+      },
+      "dev_setup_script": "dev_setup.ps1",
+      "last_activated": "2025-08-21T00:33:34Z"
+    },
+    "lwrap_overlays": {
+      "name": "LWrap Overlays System",
+      "description": "Video/image processing overlay system",
+      "root_path": "C:\\LocalAI\\!projects\\Stuart\\LWrapOverlays",
+      "project_type": "python",
+      "active": false,
+      "boundaries": {
+        "allowed_dirs": [
+          "src",
+          "config",
+          "tests",
+          "docs"
+        ],
+        "reference_dirs": [
+          "../docs"
+        ]
+      },
+      "dev_setup_script": "dev_setup.ps1",
+      "last_activated": "2025-08-21T00:29:15Z"
+    },
+    "broadly_app": {
+      "name": "Broadly App (Legacy)",
+      "description": "Legacy Broadly application - reference only",
+      "root_path": "C:\\LocalAI\\!projects\\Stuart\\broadly_app",
+      "project_type": "python",
+      "active": false,
+      "boundaries": {
+        "allowed_dirs": [],
+        "reference_dirs": [
+          "../docs"
+        ]
+      },
+      "dev_setup_script": null,
+      "last_activated": null
+    }
+  },
+  "global_settings": {
+    "default_project": "data_cleaner",
+    "auto_cleanup_cursor_workspace": true,
+    "project_switching_prompt": true,
+    "shared_tools": [
+      "../tools",
+      "../scripts"
+    ]
+  }
+}

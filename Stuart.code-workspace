@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "name": "Stuart Data Cleaner",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "cursor.rules": [
+      ".cursor/rules/session-init.mdc",
+      ".cursor/rules/bmad/*.mdc",
+      ".cursor/rules/stuart_workspace_rules.md"
+    ],
+    "cursor.workspaceRules": true,
+    "cursor.autoLoadRules": true
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.black-formatter",
+      "ms-python.pylint"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Initialize Stuart Project Session",
+        "type": "shell",
+        "command": "echo",
+        "args": ["Session initialization complete - BMad rules loaded"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "silent",
+          "focus": false,
+          "panel": "shared"
+        }
+      }
+    ]
+  }
+}
