@@ -1,3 +1,8 @@
+# Sensitive configuration files
+test_config.json
+.env
+config/local_config.json
+
 # Python
 __pycache__/
 *.py[cod]
@@ -22,10 +27,9 @@ wheels/
 MANIFEST
 
 # Virtual environments
-.env
 .venv
-env/
 venv/
+env/
 ENV/
 env.bak/
 venv.bak/
@@ -33,10 +37,19 @@ venv.bak/
 # IDE and editor files
 .vscode/
 .cursor/
+.idea/
+*.swp
 *.swp
 *.swo
 *~
+
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
 # Logs
@@ -51,6 +64,10 @@ logs/
 !config.json
 !workspace_config.json
 
+# Test outputs and datasets
+tests/test_outputs/
+tests/test_datasets/
+
 # Backup files
 backup/
 *.bak
@@ -59,15 +76,6 @@ backup/
 # Temporary files
 *.tmp
 *.temp
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
 
 # Project specific
 .bmad-core/

@@ -1,0 +1,127 @@
+[
+  {
+    "chunk_file": "test_chunk_random_1_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_1_20250821_162727_20250821_162734.xlsx",
+    "processing_time": 0.03756213188171387,
+    "success": false,
+    "stdout": "",
+    "stderr": "C:\\Program Files\\Python310\\python.exe: can't open file 'C:\\\\LocalAI\\\\!projects\\\\Stuart\\\\main.py': [Errno 2] No such file or directory\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:27:34.280505",
+    "analysis": {
+      "chunk_file": "test_chunk_random_1_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.03756213188171387,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_2_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_2_20250821_162727_20250821_162735.xlsx",
+    "processing_time": 0.03685402870178223,
+    "success": false,
+    "stdout": "",
+    "stderr": "C:\\Program Files\\Python310\\python.exe: can't open file 'C:\\\\LocalAI\\\\!projects\\\\Stuart\\\\main.py': [Errno 2] No such file or directory\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:27:35.330978",
+    "analysis": {
+      "chunk_file": "test_chunk_random_2_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.03685402870178223,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_3_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_3_20250821_162727_20250821_162736.xlsx",
+    "processing_time": 0.038341522216796875,
+    "success": false,
+    "stdout": "",
+    "stderr": "C:\\Program Files\\Python310\\python.exe: can't open file 'C:\\\\LocalAI\\\\!projects\\\\Stuart\\\\main.py': [Errno 2] No such file or directory\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:27:36.373285",
+    "analysis": {
+      "chunk_file": "test_chunk_random_3_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.038341522216796875,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_4_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_4_20250821_162727_20250821_162737.xlsx",
+    "processing_time": 0.03874349594116211,
+    "success": false,
+    "stdout": "",
+    "stderr": "C:\\Program Files\\Python310\\python.exe: can't open file 'C:\\\\LocalAI\\\\!projects\\\\Stuart\\\\main.py': [Errno 2] No such file or directory\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:27:37.414368",
+    "analysis": {
+      "chunk_file": "test_chunk_random_4_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.03874349594116211,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_5_20250821_162728.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_5_20250821_162728_20250821_162738.xlsx",
+    "processing_time": 0.0365757942199707,
+    "success": false,
+    "stdout": "",
+    "stderr": "C:\\Program Files\\Python310\\python.exe: can't open file 'C:\\\\LocalAI\\\\!projects\\\\Stuart\\\\main.py': [Errno 2] No such file or directory\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:27:38.466416",
+    "analysis": {
+      "chunk_file": "test_chunk_random_5_20250821_162728.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.0365757942199707,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  }
+]

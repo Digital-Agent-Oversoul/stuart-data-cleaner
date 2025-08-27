@@ -1,0 +1,127 @@
+[
+  {
+    "chunk_file": "test_chunk_random_1_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_1_20250821_162727_20250821_162841.xlsx",
+    "processing_time": 0.8682417869567871,
+    "success": false,
+    "stdout": "2025-08-21 16:28:41,903 - __main__ - INFO - Starting Contact Export workflow processing: tests\\test_datasets\\test_chunk_random_1_20250821_162727.xlsx\n2025-08-21 16:28:42,117 - __main__ - INFO - Loaded 100 records for processing\n2025-08-21 16:28:42,118 - __main__ - ERROR - Error in Contact Export workflow: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n",
+    "stderr": "Traceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 118, in process_contact_export_workflow\n    processed_data = processor.process_contact_export(data, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\workflows\\contact_export\\export_processor.py\", line 52, in process_contact_export\n    print(\"\\U0001f504 Processing Contact Export using unified core logic...\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 257, in <module>\n    main()\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 246, in main\n    success = process_contact_export_workflow(config, args.input_file, args.output_dir, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 147, in process_contact_export_workflow\n    print(f\"\\u274c Error processing contact export data: {str(e)}\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u274c' in position 0: character maps to <undefined>\n",
+    "return_code": 1,
+    "timestamp": "2025-08-21T16:28:42.190213",
+    "analysis": {
+      "chunk_file": "test_chunk_random_1_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.8682417869567871,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_2_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_2_20250821_162727_20250821_162843.xlsx",
+    "processing_time": 0.832923173904419,
+    "success": false,
+    "stdout": "2025-08-21 16:28:43,753 - __main__ - INFO - Starting Contact Export workflow processing: tests\\test_datasets\\test_chunk_random_2_20250821_162727.xlsx\n2025-08-21 16:28:43,978 - __main__ - INFO - Loaded 100 records for processing\n2025-08-21 16:28:43,978 - __main__ - ERROR - Error in Contact Export workflow: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n",
+    "stderr": "Traceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 118, in process_contact_export_workflow\n    processed_data = processor.process_contact_export(data, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\workflows\\contact_export\\export_processor.py\", line 52, in process_contact_export\n    print(\"\\U0001f504 Processing Contact Export using unified core logic...\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 257, in <module>\n    main()\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 246, in main\n    success = process_contact_export_workflow(config, args.input_file, args.output_dir, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 147, in process_contact_export_workflow\n    print(f\"\\u274c Error processing contact export data: {str(e)}\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u274c' in position 0: character maps to <undefined>\n",
+    "return_code": 1,
+    "timestamp": "2025-08-21T16:28:44.037875",
+    "analysis": {
+      "chunk_file": "test_chunk_random_2_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.832923173904419,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_3_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_3_20250821_162727_20250821_162845.xlsx",
+    "processing_time": 0.8787634372711182,
+    "success": false,
+    "stdout": "2025-08-21 16:28:45,632 - __main__ - INFO - Starting Contact Export workflow processing: tests\\test_datasets\\test_chunk_random_3_20250821_162727.xlsx\n2025-08-21 16:28:45,836 - __main__ - INFO - Loaded 100 records for processing\n2025-08-21 16:28:45,837 - __main__ - ERROR - Error in Contact Export workflow: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n",
+    "stderr": "Traceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 118, in process_contact_export_workflow\n    processed_data = processor.process_contact_export(data, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\workflows\\contact_export\\export_processor.py\", line 52, in process_contact_export\n    print(\"\\U0001f504 Processing Contact Export using unified core logic...\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 257, in <module>\n    main()\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 246, in main\n    success = process_contact_export_workflow(config, args.input_file, args.output_dir, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 147, in process_contact_export_workflow\n    print(f\"\\u274c Error processing contact export data: {str(e)}\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u274c' in position 0: character maps to <undefined>\n",
+    "return_code": 1,
+    "timestamp": "2025-08-21T16:28:45.930827",
+    "analysis": {
+      "chunk_file": "test_chunk_random_3_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.8787634372711182,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_4_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_4_20250821_162727_20250821_162846.xlsx",
+    "processing_time": 0.7917318344116211,
+    "success": false,
+    "stdout": "2025-08-21 16:28:47,481 - __main__ - INFO - Starting Contact Export workflow processing: tests\\test_datasets\\test_chunk_random_4_20250821_162727.xlsx\n2025-08-21 16:28:47,671 - __main__ - INFO - Loaded 100 records for processing\n2025-08-21 16:28:47,671 - __main__ - ERROR - Error in Contact Export workflow: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n",
+    "stderr": "Traceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 118, in process_contact_export_workflow\n    processed_data = processor.process_contact_export(data, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\workflows\\contact_export\\export_processor.py\", line 52, in process_contact_export\n    print(\"\\U0001f504 Processing Contact Export using unified core logic...\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 257, in <module>\n    main()\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 246, in main\n    success = process_contact_export_workflow(config, args.input_file, args.output_dir, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 147, in process_contact_export_workflow\n    print(f\"\\u274c Error processing contact export data: {str(e)}\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u274c' in position 0: character maps to <undefined>\n",
+    "return_code": 1,
+    "timestamp": "2025-08-21T16:28:47.733410",
+    "analysis": {
+      "chunk_file": "test_chunk_random_4_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.7917318344116211,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_5_20250821_162728.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_5_20250821_162728_20250821_162848.xlsx",
+    "processing_time": 0.797656774520874,
+    "success": false,
+    "stdout": "2025-08-21 16:28:49,281 - __main__ - INFO - Starting Contact Export workflow processing: tests\\test_datasets\\test_chunk_random_5_20250821_162728.xlsx\n2025-08-21 16:28:49,475 - __main__ - INFO - Loaded 100 records for processing\n2025-08-21 16:28:49,475 - __main__ - ERROR - Error in Contact Export workflow: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n",
+    "stderr": "Traceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 118, in process_contact_export_workflow\n    processed_data = processor.process_contact_export(data, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\workflows\\contact_export\\export_processor.py\", line 52, in process_contact_export\n    print(\"\\U0001f504 Processing Contact Export using unified core logic...\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f504' in position 0: character maps to <undefined>\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 257, in <module>\n    main()\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 246, in main\n    success = process_contact_export_workflow(config, args.input_file, args.output_dir, date_range)\n  File \"C:\\LocalAI\\!projects\\Stuart\\data_cleaner\\main.py\", line 147, in process_contact_export_workflow\n    print(f\"\\u274c Error processing contact export data: {str(e)}\")\n  File \"C:\\Program Files\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u274c' in position 0: character maps to <undefined>\n",
+    "return_code": 1,
+    "timestamp": "2025-08-21T16:28:49.542569",
+    "analysis": {
+      "chunk_file": "test_chunk_random_5_20250821_162728.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.797656774520874,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  }
+]

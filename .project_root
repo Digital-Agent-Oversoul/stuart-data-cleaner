@@ -1,0 +1,18 @@
+# Data Cleaner Project Root Marker
+# This file marks the root of the data_cleaner project
+# All development work should be contained within this directory structure
+# 
+# Project: Stuart Data Cleaning System
+# Created: 2025-01-21
+# Location: C:\LocalAI\!projects\Stuart\data_cleaner\
+# 
+# DO NOT CREATE PROJECT FILES OUTSIDE THIS DIRECTORY
+# 
+# Valid project locations:
+# - core/           # Core engine modules
+# - config/         # Configuration management
+# - workflows/      # Workflow implementations
+# - tests/          # Test scripts
+# - project_docs/   # Project documentation
+# - cli/            # Command line interface
+# - processors/     # Process modules

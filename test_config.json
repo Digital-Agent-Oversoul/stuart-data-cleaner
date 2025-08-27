@@ -1,0 +1,35 @@
+{
+  "llm": {
+    "openai": {
+      "api_key": null,
+      "model": "gpt-4o-mini",
+      "max_tokens": 150,
+      "temperature": 0.1
+    },
+    "ollama": {
+      "base_url": "http://localhost:11434",
+      "model": "qwen2.5:7b-instruct-q4_K_M"
+    }
+  },
+  "processing": {
+    "batch_size": 50,
+    "max_workers": 4,
+    "confidence_threshold": 0.3,
+    "enable_uncertainty_detection": true,
+    "enable_interactive_learning": true,
+    "show_progress": true,
+    "max_retries": 3,
+    "retry_delay_ms": 1000
+  },
+  "budget": {
+    "max_daily_cost": 5.0,
+    "max_total_cost": 50.0,
+    "warn_at_percentage": 0.8
+  },
+  "output": {
+    "output_directory": "test_output",
+    "backup_original": true,
+    "create_summary_report": true,
+    "enable_progress_tracking": true
+  }
+}

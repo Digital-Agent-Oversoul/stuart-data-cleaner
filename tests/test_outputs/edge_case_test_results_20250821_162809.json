@@ -1,0 +1,127 @@
+[
+  {
+    "chunk_file": "test_chunk_random_1_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_1_20250821_162727_20250821_162802.xlsx",
+    "processing_time": 0.7082223892211914,
+    "success": false,
+    "stdout": "",
+    "stderr": "usage: main.py [-h] [--output-dir OUTPUT_DIR] [--location LOCATION]\n               [--start START] [--end END] [--config CONFIG] [--verbose]\n               {survey,contact} input_file\nmain.py: error: argument workflow: invalid choice: 'contact_export' (choose from 'survey', 'contact')\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:28:03.109659",
+    "analysis": {
+      "chunk_file": "test_chunk_random_1_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.7082223892211914,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_2_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_2_20250821_162727_20250821_162804.xlsx",
+    "processing_time": 0.590937614440918,
+    "success": false,
+    "stdout": "",
+    "stderr": "usage: main.py [-h] [--output-dir OUTPUT_DIR] [--location LOCATION]\n               [--start START] [--end END] [--config CONFIG] [--verbose]\n               {survey,contact} input_file\nmain.py: error: argument workflow: invalid choice: 'contact_export' (choose from 'survey', 'contact')\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:28:04.702883",
+    "analysis": {
+      "chunk_file": "test_chunk_random_2_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.590937614440918,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_3_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_3_20250821_162727_20250821_162805.xlsx",
+    "processing_time": 0.6125054359436035,
+    "success": false,
+    "stdout": "",
+    "stderr": "usage: main.py [-h] [--output-dir OUTPUT_DIR] [--location LOCATION]\n               [--start START] [--end END] [--config CONFIG] [--verbose]\n               {survey,contact} input_file\nmain.py: error: argument workflow: invalid choice: 'contact_export' (choose from 'survey', 'contact')\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:28:06.320285",
+    "analysis": {
+      "chunk_file": "test_chunk_random_3_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.6125054359436035,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_4_20250821_162727.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_4_20250821_162727_20250821_162807.xlsx",
+    "processing_time": 0.5893144607543945,
+    "success": false,
+    "stdout": "",
+    "stderr": "usage: main.py [-h] [--output-dir OUTPUT_DIR] [--location LOCATION]\n               [--start START] [--end END] [--config CONFIG] [--verbose]\n               {survey,contact} input_file\nmain.py: error: argument workflow: invalid choice: 'contact_export' (choose from 'survey', 'contact')\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:28:07.921422",
+    "analysis": {
+      "chunk_file": "test_chunk_random_4_20250821_162727.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.5893144607543945,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  },
+  {
+    "chunk_file": "test_chunk_random_5_20250821_162728.xlsx",
+    "pattern_type": "random",
+    "output_file": "test_output_test_chunk_random_5_20250821_162728_20250821_162808.xlsx",
+    "processing_time": 0.7014119625091553,
+    "success": false,
+    "stdout": "",
+    "stderr": "usage: main.py [-h] [--output-dir OUTPUT_DIR] [--location LOCATION]\n               [--start START] [--end END] [--config CONFIG] [--verbose]\n               {survey,contact} input_file\nmain.py: error: argument workflow: invalid choice: 'contact_export' (choose from 'survey', 'contact')\n",
+    "return_code": 2,
+    "timestamp": "2025-08-21T16:28:09.624571",
+    "analysis": {
+      "chunk_file": "test_chunk_random_5_20250821_162728.xlsx",
+      "pattern_type": "random",
+      "success": false,
+      "processing_time": 0.7014119625091553,
+      "issues_found": [
+        "Workflow execution failed",
+        "Unknown error occurred"
+      ],
+      "recommendations": [
+        "Check input file path and permissions",
+        "Verify Contact Export workflow configuration"
+      ]
+    }
+  }
+]
